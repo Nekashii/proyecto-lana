@@ -8,7 +8,7 @@ public class User
     public required string Email { get; set; }
     public required string Password { get; set; }
     public required bool Admin { get; set; }
-    public required DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
     public DateTime? UpdatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }
 }
