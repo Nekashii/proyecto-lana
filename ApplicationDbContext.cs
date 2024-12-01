@@ -9,11 +9,11 @@ public class ApplicationDbContext : DbContext
     {
     }
 
-    public DbSet<CartProduct>? CartProduct { get; set; }
-    public DbSet<Order>? Order { get; set; }
-    public DbSet<OrderProduct>? OrderProduct { get; set; }
-    public DbSet<Product>? Product { get; set; }
-    public DbSet<User>? User { get; set; }
+    public DbSet<CartProduct>? CartProducts { get; set; }
+    public DbSet<Order>? Orders { get; set; }
+    public DbSet<OrderProduct>? OrderProducts { get; set; }
+    public DbSet<Product>? Products { get; set; }
+    public DbSet<User>? Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -26,6 +26,17 @@ public class ApplicationDbContext : DbContext
                 Email = "alitzel@gmail.com",
                 Password = "Cisco123",
                 Admin = true,
+            }
+        );
+        modelBuilder.Entity<Product>().HasData(
+            new Product
+            {
+                Id = 1,
+                Name = "Diviltac",
+                Description = "Jeje",
+                Image = "https://http2.mlstatic.com/D_NQ_NP_636771-MLM78569019015_082024-O.webp",
+                Price = 49,
+                Amount = 10,
             }
         );
     }
