@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Store.Models;
 
 namespace Store.Controllers;
 
@@ -18,5 +19,14 @@ public class ProductController(ApplicationDbContext dbContext) : ControllerBase
     {
         var products = dbContext.Products!;
         return Ok(products.Where(product => product.Amount > 0).OrderByDescending(product => product.CreatedAt));
+    }
+
+    [HttpPost]
+    public IActionResult Create([FromBody] Product product)
+    {
+        var products = dbContext.Products!;
+        products.Add(product);
+        dbContext.SaveChanges();
+        return Ok();
     }
 }
