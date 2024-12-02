@@ -12,7 +12,8 @@ public class OrderController(ApplicationDbContext dbContext) : ControllerBase
     public IActionResult Get()
     {
         var orders = dbContext.Orders!;
-        return Ok(orders.OrderByDescending(order => order.CreatedAt).Include(order => order.User)
+        return Ok(orders.Where(order => order.DeletedAt == null).OrderByDescending(order => order.CreatedAt)
+            .Include(order => order.User)
             .Include(order => order.Products)
             .ThenInclude(product => product.Product));
     }
@@ -21,7 +22,8 @@ public class OrderController(ApplicationDbContext dbContext) : ControllerBase
     public IActionResult GetByUser([FromRoute] int userId)
     {
         var orders = dbContext.Orders!;
-        return Ok(orders.Where(order => order.User.Id == userId).OrderByDescending(order => order.CreatedAt)
+        return Ok(orders.Where(order => order.DeletedAt == null && order.User.Id == userId)
+            .OrderByDescending(order => order.CreatedAt)
             .Include(order => order.Products).ThenInclude(product => product.Product));
     }
 

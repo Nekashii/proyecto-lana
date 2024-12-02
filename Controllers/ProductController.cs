@@ -11,14 +11,15 @@ public class ProductController(ApplicationDbContext dbContext) : ControllerBase
     public IActionResult Get()
     {
         var products = dbContext.Products!;
-        return Ok(products.OrderByDescending(product => product.CreatedAt));
+        return Ok(products.Where(product => product.DeletedAt == null).OrderByDescending(product => product.CreatedAt));
     }
 
     [HttpGet("available")]
     public IActionResult GetAvailable()
     {
         var products = dbContext.Products!;
-        return Ok(products.Where(product => product.Amount > 0).OrderByDescending(product => product.CreatedAt));
+        return Ok(products.Where(product => product.DeletedAt == null && product.Amount > 0)
+            .OrderByDescending(product => product.CreatedAt));
     }
 
     [HttpPost]

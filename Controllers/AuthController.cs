@@ -19,7 +19,8 @@ public class AuthController : ControllerBase
     {
         var users = _dbContext.Users!;
         var user = users.SingleOrDefault(user =>
-            user.Email.ToLower() == credentials.Email.ToLower() && user.Password == credentials.Password);
+            user.DeletedAt == null && user.Email.ToLower() == credentials.Email.ToLower() &&
+            user.Password == credentials.Password);
         if (user == null) return NotFound();
         return Ok(user);
     }
