@@ -52,4 +52,14 @@ public class CartController(ApplicationDbContext dbContext) : ControllerBase
         dbContext.SaveChanges();
         return Ok();
     }
+
+    [HttpDelete]
+    public IActionResult Clear([FromRoute] int userId)
+    {
+        var cartProducts = dbContext.CartProducts!;
+        foreach (var cartProduct in cartProducts.Where(product => product.UserId == userId))
+            cartProducts.Remove(cartProduct);
+        dbContext.SaveChanges();
+        return Ok();
+    }
 }
