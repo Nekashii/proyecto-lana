@@ -10,13 +10,13 @@ public class ProductController(ApplicationDbContext dbContext) : ControllerBase
     public IActionResult Get()
     {
         var products = dbContext.Products!;
-        return (Ok(products));
+        return Ok(products.OrderByDescending(product => product.CreatedAt));
     }
 
     [HttpGet("available")]
     public IActionResult GetAvailable()
     {
         var products = dbContext.Products!;
-        return (Ok(products.Where(product => product.Amount > 0)));
+        return Ok(products.Where(product => product.Amount > 0).OrderByDescending(product => product.CreatedAt));
     }
 }
